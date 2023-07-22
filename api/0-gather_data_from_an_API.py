@@ -1,53 +1,25 @@
 #!/usr/bin/python3
-"""
-Define 3 functions to gather data from an API
-Accept integer as parameter, which is the employee ID
-Display on the standard output the employee TO DO list progress
-in provided format
-"""
+"""Script that prints specific information from an API"""
 import requests
 import sys
 
+if __name__ == '__main__':
+    API_URL = 'https://jsonplaceholder.typicode.com'
 
-def get_employee_tasks(employeeId):
-    """Get the tasks of an employee"""
-    url = "https://jsonplaceholder.typicode.com/"
-    url += "users/{}/todos".format(employeeId)
-    response = requests.get(url)
-    return response.json()
+    id = sys.argv[1]
+    request = requests.get('{}/users/{}/todos'.format(
+        API_URL, id), params={"_expand": "user"})
 
+    response = request.json()
 
-def get_employee_name(employeeId):
-    """Get the name of an employee by adding the employeeId to the URL"""
-    url = "https://jsonplaceholder.typicode.com/"
-    url += "users/{}".format(employeeId)
-    response = requests.get(url)
-    return response.json().get("name")
+    completed_tasks = [task for task in response if task['completed']]
+    EMPLOYEE_NAME = response[0]['user']['name']
+    NUMBER_OF_DONE_TASKS = len(completed_tasks)
+    TOTAL_NUMBER_OF_TASKS = len(response)
 
+    print("Employee {} is done with tasks({}/{}):".format(
+        EMPLOYEE_NAME, NUMBER_OF_DONE_TASKS, TOTAL_NUMBER_OF_TASKS
+    ))
 
-def get_completed_tasks(tasks):
-    """
-    Get the completed tasks of an employee by adding tasks to a list
-    if the task is completed
-    """
-    completed_tasks = []
-    for task in tasks:
-        if task.get("completed"):
-            completed_tasks.append(task)
-    return completed_tasks
-
-
-def print_employee_tasks(employeeName, completedTasks, totalTasks):
-    """Print the tasks of an employee"""
-    print("Employee {} is done with tasks({}/{}):"
-          .format(employeeName, len(completedTasks), totalTasks))
-    for task in completedTasks:
-        print("\t {}".format(task.get("title")))
-
-
-if __name__ == "__main__":
-    employeeId = sys.argv[1]
-    tasks = get_employee_tasks(employeeId)
-    employeeName = get_employee_name(employeeId)
-    completedTasks = get_completed_tasks(tasks)
-    print_employee_tasks(employeeName, completedTasks, len(tasks))
+    for task in completed_tasks:
+        print("\t {}".format(task['title']))
