@@ -1,12 +1,10 @@
 #!/usr/bin/python3
-""" NEWD DAY """
+""" not enough information """
 import requests
-import sys
-
 
 def get_employee_todo_progress(employee_id):
     base_url = "https://jsonplaceholder.typicode.com/users"
-    todos_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
+    todos_url = f"{base_url}/{employee_id}/todos"
 
     # Fetching employee details
     employee_response = requests.get(f"{base_url}/{employee_id}")
@@ -25,7 +23,7 @@ def get_employee_todo_progress(employee_id):
     print(f"Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):")
     for todo in todos_data:
         if todo['completed']:
-            print("    ", todo['title'])  # Use four spaces for indentation
+            print("\t", todo['title'])
 
 if __name__ == "__main__":
     try:
