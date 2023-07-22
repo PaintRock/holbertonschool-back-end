@@ -4,10 +4,11 @@ import requests
 
 
 def get_employee_todo_progress(employee_id):
+    """Provide direction"""
     base_url = "https://jsonplaceholder.typicode.com/users"
     todos_url = "https://jsonplaceholder.typicode.com/todos/1"
 
-    # Fetching employee details
+    """ Fetching employee details """
     employee_response = requests.get(f"{base_url}/{employee_id}")
     employee_data = employee_response.json()
     employee_name = employee_data['name']
