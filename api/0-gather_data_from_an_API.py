@@ -1,38 +1,40 @@
 #!/usr/bin/python3
-""" API code """
+"""
+This module start the conecction with API jsonplace
+"""
 import requests
-import sys
+from sys import argv
 
 
-def get_employee_todo_progress(employee_id):
-    base_url = "https://jsonplaceholder.typicode.com/users"
-    todos_url = (f"https://jsonplaceholder.typicode.com/users/"
-                 f"{employee_id}/todos")
+def gather():
+    """
+    This methos return the tasks of the users
+    """
 
-    """ Fetching employee details """
-    employee_response = requests.get(f"{base_url}/{employee_id}")
-    employee_data = employee_response.json()
-    employee_name = employee_data['name']
+    url_all = "https://jsonplaceholder.typicode.com/todos?"
+    url_user = "https://jsonplaceholder.typicode.com/users?"
+    argv_all = {'userId': argv[1]}
+    argv_user = {'id': argv[1]}
 
-    """ Fetching TODO list for the employee """
-    todos_response = requests.get(todos_url)
-    todos_data = todos_response.json()
+    response_all = requests.get(url_all, params=argv_all)
+    response_user = requests.get(url_user, params=argv_user)
 
-    """ Counting completed tasks and getting total tasks count """
-    total_tasks = len(todos_data)
-    completed_tasks = sum(1 for todo in todos_data if todo['completed'])
+    all_json = response_all.json()
+    user_json = response_user.json()
+    comp, task = 0, 0
+    list_task = []
 
-    # Displaying results
-    print(f"Employee {employee_name} is done with tasks"
-          f"({completed_tasks}/{total_tasks}):")
-    for todo in todos_data:
-        if todo['completed']:
-            print("    ", todo['title'])  # Use four spaces for indentation
+    for dates in all_json:
+        task += 1
+        if dates['completed']:
+            comp += 1
+            list_task.append(dates['title'])
+
+    name = user_json[0]['name']
+    print("Employee {} is done with tasks({}/{}):".format(name, comp, task))
+    for task in list_task:
+        print("\t " + task)
 
 
-if __name__ == "__main__":
-    try:
-        employee_id = int(input("Enter the employee ID: "))
-        get_employee_todo_progress(employee_id)
-    except ValueError:
-        print("Invalid input. Please enter an integer for the employee ID.")
+if __name__ == '__main__':
+    gather()
