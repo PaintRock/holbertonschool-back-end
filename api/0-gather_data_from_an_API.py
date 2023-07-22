@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ API tool to retrive datat from an URL """
 import requests
+import sys
 
 
 def get_employee_todo_progress(employee_id):
