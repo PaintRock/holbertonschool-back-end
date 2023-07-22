@@ -14,7 +14,7 @@ def get_employee_todo_progress(employee_id):
     employee_name = employee_data['name']
 
     """ Fetching TODO list for the employee """
-    todos_response = requests.get(todos_url, params={"userid": employee_id})
+    todos_response = requests.get(todos_url, params={"userId": employee_id})
     todos_data = todos_response.json()
 
     """ Counting completed tasks and getting total tasks count """
