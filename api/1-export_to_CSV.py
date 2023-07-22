@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-""" This expands on number one """
-
+"""
+This module start the conecction with API jsonplace
+"""
 import requests
-import csv
 from sys import argv
+
 
 def gather():
     """
-    This method returns the tasks of the user and prints 
-    the TODO list progress.
+    This methos return the tasks of the users
     """
 
     url_all = "https://jsonplaceholder.typicode.com/todos?"
@@ -21,7 +21,6 @@ def gather():
 
     all_json = response_all.json()
     user_json = response_user.json()
-
     comp, task = 0, 0
     list_task = []
 
@@ -36,21 +35,6 @@ def gather():
     for task in list_task:
         print("\t " + task)
 
-    # Export data to CSV
-    export_to_csv(name, comp, task, list_task)
-
-
-def export_to_csv(employee_name, completed_tasks, total_tasks, tasks_list):
-    file_name = f"{employee_name.replace(' ', '_')}_todo_list.csv"
-    with open(file_name, 'w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-        for task_title in tasks_list:
-            csv_writer.writerow([argv[1], employee_name, "True" if task_title in completed_tasks else "False", task_title])
-
 
 if __name__ == '__main__':
-    if len(argv) != 2:
-        print("Usage: python script.py <employee_id>")
-    else:
-        gather()
+    gather()
