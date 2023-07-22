@@ -7,7 +7,7 @@ import sys
 def get_employee_todo_progress(employee_id):
     """Provide direction"""
     base_url = "https://jsonplaceholder.typicode.com/users"
-    todos_url = "https://jsonplaceholder.typicode.com/todos/1"
+    todos_url = f"https://jsonplaceholder.typicode.com/{employee_id}/todos/1/"
 
     """ Fetching employee details """
     employee_response = requests.get(f"{base_url}/{employee_id}")
