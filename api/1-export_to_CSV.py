@@ -7,7 +7,8 @@ from sys import argv
 
 def gather():
     """
-    This method returns the tasks of the user and prints the TODO list progress.
+    This method returns the tasks of the user and prints 
+    the TODO list progress.
     """
 
     url_all = "https://jsonplaceholder.typicode.com/todos?"
