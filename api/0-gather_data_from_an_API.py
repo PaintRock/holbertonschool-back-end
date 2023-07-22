@@ -1,34 +1,29 @@
 #!/usr/bin/python3
 """ API tool to retrive datat from an URL """
 import requests
-import sys
-
 
 def get_employee_todo_progress(employee_id):
-    """Provide direction"""
     base_url = "https://jsonplaceholder.typicode.com/users"
     todos_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
 
-    """ Fetching employee details """
+    # Fetching employee details
     employee_response = requests.get(f"{base_url}/{employee_id}")
     employee_data = employee_response.json()
     employee_name = employee_data['name']
 
-    """Fetching TODO list for the employee """
+    # Fetching TODO list for the employee
     todos_response = requests.get(todos_url)
     todos_data = todos_response.json()
 
-    """ Counting completed tasks and getting total tasks count """
+    # Counting completed tasks and getting total tasks count
     total_tasks = len(todos_data)
     completed_tasks = sum(1 for todo in todos_data if todo['completed'])
 
-    """Displaying results"""
-    print(f"Employee {employee_name}\
-        is done with tasks({completed_tasks}/{total_tasks}):")
+    # Displaying results
+    print(f"Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):")
     for todo in todos_data:
         if todo['completed']:
-            print("    ", todo['title'])  # Use four spaces
-
+            print("    ", todo['title'])  # Use four spaces for indentation
 
 if __name__ == "__main__":
     try:
