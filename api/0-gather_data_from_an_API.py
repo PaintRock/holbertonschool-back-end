@@ -1,40 +1,57 @@
 #!/usr/bin/python3
 """
-This module start the conecction with API jsonplace
+API set up to retrieve data from a url
 """
 import requests
-from sys import argv
+
+API_URL = "https://jsonplaceholder.typicode.com/users"
+TODOS_URL = "https://jsonplaceholder.typicode.com/todos"
 
 
-def gather():
-    """
-    This methos return the tasks of the users
-    """
+def get_employee_info(employee_id):
+    # Get employee information from the API
+    employee_response = requests.get(f"{API_URL}/{employee_id}")
+    employee_data = employee_response.json()
 
-    url_all = "https://jsonplaceholder.typicode.com/todos?"
-    url_user = "https://jsonplaceholder.typicode.com/users?"
-    argv_all = {'userId': argv[1]}
-    argv_user = {'id': argv[1]}
+    # Get TODO list for the employee
+    todos_response = requests.get(TODOS_URL,
+                                  params={"userId": employee_id})
+    todos_data = todos_response.json()
 
-    response_all = requests.get(url_all, params=argv_all)
-    response_user = requests.get(url_user, params=argv_user)
+    # Extract completed tasks and count
+    completed_tasks = [todo["title"]
+                       for todo in todos_data if todo["completed"]]
+    num_completed_tasks = len(completed_tasks)
+    total_tasks = len(todos_data)
 
-    all_json = response_all.json()
-    user_json = response_user.json()
-    comp, task = 0, 0
-    list_task = []
-
-    for dates in all_json:
-        task += 1
-        if dates['completed']:
-            comp += 1
-            list_task.append(dates['title'])
-
-    name = user_json[0]['name']
-    print("Employee {} is done with tasks({}/{}):".format(name, comp, task))
-    for task in list_task:
-        print("\t " + task)
+    return (employee_data["name"],
+            num_completed_tasks,
+            total_tasks,
+            completed_tasks)
 
 
-if __name__ == '__main__':
-    gather()
+def display_employee_progress(employee_name,
+                              num_completed_tasks,
+                              total_tasks,
+                              completed_tasks):
+    print(
+        "Employee {} is done with tasks({}/{}):"
+        .format(employee_name, num_completed_tasks, total_tasks)
+    )
+    for task in completed_tasks:
+        print("\t", task)
+
+
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <employee_id>")
+        sys.exit(1)
+
+    employee_id = int(sys.argv[1])
+    try:
+        name, completed, total, tasks = get_employee_info(employee_id)
+        display_employee_progress(name, completed, total, tasks)
+    except requests.exceptions.RequestException:
+        print("Error: Unable to fetch data from the API.")
