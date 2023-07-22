@@ -40,15 +40,17 @@ export_to_csv(name, comp, task, list_task)
 
 
 def export_to_csv(employee_name, completed_tasks, total_tasks, tasks_list):
-    """ Chmod done now doument """
     file_name = f"{employee_name.replace(' ', '_')}_todo_list.csv"
     with open(file_name, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
         csv_writer.writerow(["USER_ID", "USERNAME",
                              "TASK_COMPLETED_STATUS", "TASK_TITLE"])
         for task_title in tasks_list:
-            csv_writer.writerow([argv[1], employee_name,
-                                 "True" if task_title in completed_tasks else "False", task_title])
+            completed_status =
+            "True" if task_title in completed_tasks else "False"
+            csv_writer.writerow(
+                [argv[1], employee_name, completed_status, task_title]
+            )
 
 
 if __name__ == '__main__':
