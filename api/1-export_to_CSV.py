@@ -32,10 +32,7 @@ def gather():
             list_task.append(dates['title'])
 
     name = user_json[0]['name']
-    print("Employee {} is done with tasks({}/{}):".format(name, comp, task))
-    for task in list_task:
-        print("\t " + task)
-
+    
     with open('{}.csv'.format(argv[1]), 'w', encoding='UTF8') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_NONNUMERIC)
         writer.writerows(list_date)
