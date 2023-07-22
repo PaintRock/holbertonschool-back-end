@@ -26,13 +26,11 @@ def gather():
     list_date = []
 
     for dates in all_json:
-        task += 1
-        if dates['completed']:
-            comp += 1
-            list_task.append(dates['title'])
+        info = [str(id), name, str(date['completed']), date['title']]
+        list_date.append(info)
 
     name = user_json[0]['name']
-    
+
     with open('{}.csv'.format(argv[1]), 'w', encoding='UTF8') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_NONNUMERIC)
         writer.writerows(list_date)
