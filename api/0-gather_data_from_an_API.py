@@ -6,8 +6,7 @@ import sys
 
 def get_employee_todo_progress(employee_id):
     base_url = "https://jsonplaceholder.typicode.com/users"
-    todos_url = (f"https://jsonplaceholder.typicode.com/users/"
-                 f"{employee_id}/todos")
+    todos_url = ("https://jsonplaceholder.typicode.com/users/todos")
 
     """ Fetching employee details """
     employee_response = requests.get(f"{base_url}/{employee_id}")
@@ -15,7 +14,7 @@ def get_employee_todo_progress(employee_id):
     employee_name = employee_data['name']
 
     """ Fetching TODO list for the employee """
-    todos_response = requests.get(todos_url)
+    todos_response = requests.get(todos_url, params={"userid": employee_id})
     todos_data = todos_response.json()
 
     """ Counting completed tasks and getting total tasks count """
