@@ -23,6 +23,7 @@ def gather():
     user_json = response_user.json()
     comp, task = 0, 0
     list_task = []
+    list_date = []
 
     for dates in all_json:
         task += 1
