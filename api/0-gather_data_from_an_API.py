@@ -8,7 +8,7 @@ def get_employee_todo_progress(employee_id):
     """Provide direction"""
     base_url = "https://jsonplaceholder.typicode.com/users"
     todos_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
-    
+
     """ Fetching employee details """
     employee_response = requests.get(f"{base_url}/{employee_id}")
     employee_data = employee_response.json()
@@ -27,7 +27,7 @@ def get_employee_todo_progress(employee_id):
         is done with tasks({completed_tasks}/{total_tasks}):")
     for todo in todos_data:
         if todo['completed']:
-            print("\t", todo['title'])
+            print("    ", todo['title'])  # Use four spaces
 
 
 if __name__ == "__main__":
