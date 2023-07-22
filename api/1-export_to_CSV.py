@@ -4,6 +4,7 @@ This module start the conecction with API jsonplace
 """
 import requests
 from sys import argv
+import csv
 
 
 def gather():
