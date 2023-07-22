@@ -4,7 +4,6 @@ This module start the conecction with API jsonplace
 """
 import requests
 from sys import argv
-import csv
 
 
 def gather():
@@ -36,27 +35,10 @@ def gather():
     for task in list_task:
         print("\t " + task)
 
-
-export_to_csv(name, comp, task, list_task)
-
-
-def export_to_csv(employee_name, completed_tasks, total_tasks, tasks_list):
-    """ is it really the doc """
-    file_name = f"{employee_name.replace(' ', '_')}_todo_list.csv"
-    with open(file_name, 'w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["USER_ID", "USERNAME",
-                             "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-        for task_title in tasks_list:
-            completed_status =
-            "True" if task_title in completed_tasks else "False"
-            csv_writer.writerow(
-                [argv[1], employee_name, completed_status, task_title]
-            )
+    with open('{}.csv'.format(argv[1]), 'w', encoding='UTF8') as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_NONNUMERIC)
+        writer.writerows(list_date)
 
 
 if __name__ == '__main__':
-    if len(argv) != 2:
-        print("Usage: python script.py <employee_id>")
-    else:
-        gather()
+    gather()
