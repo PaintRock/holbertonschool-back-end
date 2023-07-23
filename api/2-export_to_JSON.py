@@ -46,4 +46,7 @@ def export_to_json(employee_id, tasks_list):
 
 
 if __name__ == '__main__':
+    if len(argv) != 2:
+        print("Usage: python script.py <employee_id>")
+    else:
         gather()
