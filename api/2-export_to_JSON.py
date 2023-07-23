@@ -2,9 +2,11 @@
 """
 This module start the conecction with API jsonplace
 """
+import argv
+import json 
 import requests
-from sys import argv
-import json
+from sys 
+
 
 
 def gather():
