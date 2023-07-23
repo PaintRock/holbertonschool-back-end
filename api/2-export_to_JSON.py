@@ -2,14 +2,13 @@
 """
 This module start the conecction with API jsonplace
 """
-import csv
 import requests
 from sys import argv
 
 
 def gather():
     """
-    This methos return all task of user
+    This methos return the tasks of the users
     """
 
     url_all = "https://jsonplaceholder.typicode.com/todos?"
@@ -24,12 +23,8 @@ def gather():
     user_json = response_user.json()
 
     name = user_json[0]['username']
-    id = user_json[0]['id']
-    list_date = []
-
-    for date in all_json:
-        info = [str(id), name, str(date['completed']), date['title']]
-        list_date.append(info)
+    user_id = user_json[0]['id']
+    tasks_list = []
 
     for task in all_json:
         task_info = {
@@ -50,4 +45,7 @@ def export_to_json(employee_id, tasks_list):
 
 
 if __name__ == '__main__':
-    gather()
+    if len(argv) != 2:
+        print("Usage: python script.py <employee_id>")
+    else:
+        gather()
