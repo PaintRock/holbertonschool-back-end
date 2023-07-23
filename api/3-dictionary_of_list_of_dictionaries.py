@@ -9,7 +9,7 @@ from sys import argv
 
 def gather():
     """
-    This method retrieves all tasks from all 
+    This method retrieves all tasks from all
     employees and exports the data in JSON format.
     """
 
