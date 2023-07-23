@@ -27,9 +27,9 @@ def gather():
     user_id = user_json[0]['id']
     tasks_list = []
     list_date = []
-    
+
     for date in all_json:
-        info = [str(id), name, str(date['completed']), date['title']]
+        info = [str(user_id), name, str(date['completed']), date['title']]
         list_date.append(info)
 
     for task in all_json:
